@@ -1,5 +1,6 @@
 package com.example.tipcalculator.HomeScreen
 
+import android.health.connect.datatypes.units.Percentage
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -15,24 +16,23 @@ class TipViewmodel : ViewModel() {
     private val _BillAmount = MutableStateFlow("")
     val BillAmount: StateFlow<String> = _BillAmount
 
-    private val _TipPercentage = MutableStateFlow(0.0)
-    val TipPercentage: MutableStateFlow<Double> = _TipPercentage
+    private val _TipPercentage = MutableStateFlow(10f)
+    val TipPercentage: StateFlow<Float> = _TipPercentage
 
     private val _TotalPerPerson = MutableStateFlow(0.0)
-    val TotalPerPerson : MutableStateFlow<Double> = _TotalPerPerson
+    val TotalPerPerson : StateFlow<Double> = _TotalPerPerson
 
     fun userUpdateBill(newAmount: String){
         _BillAmount.value = newAmount
     }
-
-
-
-
-
-
-
-
-
+    fun updateTipPercentage(newPercentage: Float) {
+        _TipPercentage.value = newPercentage
+    }
+private fun calculatipTip() {
+    val bill = BillAmount.value.toDoubleOrNull() ?: 0.0
+    val tip = bill * (_TipPercentage.value / 100)
+    val total = bill + tip
+}
 
 
 }

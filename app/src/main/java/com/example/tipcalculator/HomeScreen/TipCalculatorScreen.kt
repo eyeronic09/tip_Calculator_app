@@ -136,15 +136,15 @@ fun TipScreen(modifier: Modifier = Modifier , viewmodel: TipViewmodel) {
                             }
                         }
 
-//                        Slider(
-//                            value = tippers,
-//                            onValueChange = { tippers = it },
-//                            steps = 10,
-//                            valueRange = 10f..100f,
-//                            thumb = {
-//
-//                            }
-//                        )
+                        Slider(
+                            value = tipPercentage,
+                            onValueChange = { viewmodel.updateTipPercentage(it)},
+                            steps = 10,
+                            valueRange = 10f..100f,
+                            thumb = {
+
+                            }
+                        )
                     }
                 }
             }
