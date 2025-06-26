@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.sp
 fun TipScreen(modifier: Modifier = Modifier , viewmodel: TipViewmodel) {
     val billAmount by viewmodel.BillAmount.collectAsState()
     val tipPercentage by viewmodel.TipPercentage.collectAsState()
+    val PerPerson by viewmodel.TotalPerPerson.collectAsState()
     Scaffold(
         modifier = modifier,
         content = { paddingValues ->
@@ -74,7 +75,7 @@ fun TipScreen(modifier: Modifier = Modifier , viewmodel: TipViewmodel) {
                                 style = MaterialTheme.typography.titleMedium
                             )
                             Text(
-                                text = billAmount,
+                                text = "$${"%.2f".format(PerPerson)}",
                                 textAlign = TextAlign.Center,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 45.sp,
