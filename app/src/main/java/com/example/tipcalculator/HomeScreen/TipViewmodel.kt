@@ -11,11 +11,25 @@ class TipViewmodel : ViewModel() {
     private val _BillAmount = MutableStateFlow("")
     val BillAmount: StateFlow<String> = _BillAmount
 
-    private val _TipPercentage = MutableStateFlow(10f)
+    private val _TipPercentage = MutableStateFlow(0f)
     val TipPercentage: StateFlow<Float> = _TipPercentage
 
     private val _TotalPerPerson = MutableStateFlow(0.0)
     val TotalPerPerson : StateFlow<Double> = _TotalPerPerson
+
+    private val _spiltCounter = MutableStateFlow(0)
+    var spiltCounter : StateFlow<Int> = _spiltCounter
+
+    fun incrementSpilt(){
+        _spiltCounter.value = spiltCounter.value+1
+        calculateTip()
+    }
+    fun decrementSpilt(){
+        _spiltCounter.value = spiltCounter.value-1
+        calculateTip()
+    }
+
+
 
     fun userUpdateBill(newAmount: String){
         _BillAmount.value = newAmount
@@ -29,7 +43,10 @@ private fun calculateTip() {
     val bill = BillAmount.value.toDoubleOrNull() ?: 0.0
     val tip = bill * (_TipPercentage.value / 100)
     val total = bill + tip
-    _TotalPerPerson.value = total
+    val people = if(spiltCounter.value > 0 ) spiltCounter.value else 1
+    _TotalPerPerson.value = total / people
+
+
 }
 
 

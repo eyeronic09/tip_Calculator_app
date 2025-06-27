@@ -1,38 +1,39 @@
 package com.example.tipcalculator.HomeScreen
 
-import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia.DefaultTab.AlbumsTab.value
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,12 +41,19 @@ import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TipScreen(modifier: Modifier = Modifier , viewmodel: TipViewmodel) {
+fun TipScreen(viewmodel: TipViewmodel) {
     val billAmount by viewmodel.BillAmount.collectAsState()
     val tipPercentage by viewmodel.TipPercentage.collectAsState()
     val PerPerson by viewmodel.TotalPerPerson.collectAsState()
+    val split by viewmodel.spiltCounter.collectAsState()
     Scaffold(
-        modifier = modifier,
+        floatingActionButton = {
+            FloatingActionButton(onClick = {}) {
+              
+            }
+        }
+        ,
+        modifier = Modifier,
         content = { paddingValues ->
             Column(
                 modifier = Modifier
@@ -100,12 +108,7 @@ fun TipScreen(modifier: Modifier = Modifier , viewmodel: TipViewmodel) {
                                 "Bill Amount",
                                 color = Color.Gray
                             )
-                            OutlinedTextField(
-                                value = billAmount,
-                                onValueChange = { viewmodel.userUpdateBill(it) },
-                                modifier = Modifier.size(30.dp),
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-                            )
+                            Text(billAmount)
                         }
                         Row(
                             modifier = Modifier
@@ -118,28 +121,38 @@ fun TipScreen(modifier: Modifier = Modifier , viewmodel: TipViewmodel) {
                                 "Spilt",
                                 color = Color.Gray
                             )
-                            Row {
-                                FilledTonalButton(
-                                    onClick = {},
-                                    modifier = Modifier.size(30.dp),
-                                    shape = MaterialTheme.shapes.extraSmall
+                            Row() {
+                                IconButton(
+                                    onClick = {viewmodel.incrementSpilt()},
+                                    modifier = Modifier.size(40.dp),
+                                    colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
+
                                 ) {
-                                    Text("-")
+                                    Icon(imageVector =  Icons.Filled.KeyboardArrowUp, contentDescription = "Increase")
                                 }
-                                Text("1")
-                                FilledTonalButton(
-                                    onClick = {},
-                                    modifier = Modifier.size(30.dp),
-                                    shape = MaterialTheme.shapes.extraSmall
-                                ) {
-                                    Text("-")
+
+                                Text(
+                                    text = "$split",
+                                    modifier = Modifier.padding(10.dp)
+                                        .width(40.dp)
+                                        .height(
+                                            40.dp
+                                        ),
+                                    textAlign = TextAlign.Center,
+                                )
+                                IconButton(
+                                    onClick = {viewmodel.decrementSpilt()},
+                                    modifier = Modifier.size(40.dp),
+                                    colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
+                                    ) {
+                                    Icon(imageVector =  Icons.Filled.KeyboardArrowDown, contentDescription = "Increase")
                                 }
                             }
                         }
 
                         Slider(
                             value = tipPercentage,
-                            onValueChange = { viewmodel.updateTipPercentage(it)},
+                            onValueChange = { viewmodel.updateTipPercentage(it) },
                             steps = 10,
                             valueRange = 10f..100f,
                             thumb = {
@@ -149,8 +162,11 @@ fun TipScreen(modifier: Modifier = Modifier , viewmodel: TipViewmodel) {
                     }
                 }
             }
+
         }
+        
     )
+
 }
 @Preview(showSystemUi = true)
 @Composable
