@@ -56,6 +56,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.flow.toSet
 import kotlin.random.Random
 
 
@@ -195,21 +196,21 @@ fun TipScreen(viewmodel: TipViewmodel) {
                     Row(modifier = Modifier.padding(10.dp),
                         horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                         Button(
-                            onClick = { /* ... */ },
+                            onClick = { viewmodel.UpdateTipPercentage(10.0) },
                             shape = RectangleShape
                         ) {
                             Text("10%")
 
                         }
                         Button(
-                            onClick = { /* ... */ },
+                            onClick = {  viewmodel.UpdateTipPercentage(15.0)},
                             shape = RectangleShape
                         ) {
                             Text("15%")
 
                         }
                         Button(
-                            onClick = { /* ... */ },
+                            onClick = {  viewmodel.UpdateTipPercentage(20.0) },
                             shape = RectangleShape
                         ) {
                             Text("20%")
