@@ -11,10 +11,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,6 +26,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
@@ -34,10 +38,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlin.random.Random
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,10 +55,9 @@ fun TipScreen(viewmodel: TipViewmodel) {
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = {}) {
-              
+
             }
-        }
-        ,
+        },
         modifier = Modifier,
         content = { paddingValues ->
             Column(
@@ -96,7 +101,8 @@ fun TipScreen(viewmodel: TipViewmodel) {
                     modifier = Modifier.padding(20.dp),
                     colors = CardDefaults.cardColors(containerColor = Color.White)
                 ) {
-                    Column {
+
+                    Column() {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -108,7 +114,12 @@ fun TipScreen(viewmodel: TipViewmodel) {
                                 "Bill Amount",
                                 color = Color.Gray
                             )
-                            Text(billAmount)
+                            OutlinedTextField(
+                                value = billAmount,
+                                onValueChange = { viewmodel.userUpdateBill(it) },
+                                modifier = Modifier.size(110.dp, 35.dp),
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            )
                         }
                         Row(
                             modifier = Modifier
@@ -123,12 +134,15 @@ fun TipScreen(viewmodel: TipViewmodel) {
                             )
                             Row() {
                                 IconButton(
-                                    onClick = {viewmodel.incrementSpilt()},
+                                    onClick = { viewmodel.incrementSpilt() },
                                     modifier = Modifier.size(40.dp),
                                     colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
 
-                                ) {
-                                    Icon(imageVector =  Icons.Filled.KeyboardArrowUp, contentDescription = "Increase")
+                                    ) {
+                                    Icon(
+                                        imageVector = Icons.Filled.KeyboardArrowUp,
+                                        contentDescription = "Increase"
+                                    )
                                 }
 
                                 Text(
@@ -141,32 +155,46 @@ fun TipScreen(viewmodel: TipViewmodel) {
                                     textAlign = TextAlign.Center,
                                 )
                                 IconButton(
-                                    onClick = {viewmodel.decrementSpilt()},
+                                    onClick = { viewmodel.decrementSpilt() },
                                     modifier = Modifier.size(40.dp),
                                     colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
-                                    ) {
-                                    Icon(imageVector =  Icons.Filled.KeyboardArrowDown, contentDescription = "Increase")
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Filled.KeyboardArrowDown,
+                                        contentDescription = "Increase"
+                                    )
                                 }
+                            }
+
+                        }
+                        Row(
+                            modifier = Modifier.padding(30.dp),
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            verticalAlignment = Alignment.CenterVertically){
+                            Button(onClick = {}, shape = RectangleShape) {
+                                Text("10%")
+                            }
+                            Button(onClick = {}, shape = RectangleShape , modifier = Modifier.size(40.dp)) {
+                                Text("15%")
+                            }
+                            Button(onClick = {}, shape = RectangleShape) {
+                                Text("20%")
+                            }
+                            Button(onClick = {}, shape = RectangleShape,) {
+                                Text("20%")
                             }
                         }
 
-                        Slider(
-                            value = tipPercentage,
-                            onValueChange = { viewmodel.updateTipPercentage(it) },
-                            steps = 10,
-                            valueRange = 10f..100f,
-                            thumb = {
 
-                            }
-                        )
                     }
+
+
                 }
             }
 
         }
-        
-    )
 
+    )
 }
 @Preview(showSystemUi = true)
 @Composable

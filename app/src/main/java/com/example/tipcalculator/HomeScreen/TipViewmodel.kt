@@ -35,10 +35,7 @@ class TipViewmodel : ViewModel() {
         _BillAmount.value = newAmount
         calculateTip()
     }
-    fun updateTipPercentage(newPercentage: Float) {
-        _TipPercentage.value = newPercentage
-        calculateTip()
-    }
+
 private fun calculateTip() {
     val bill = BillAmount.value.toDoubleOrNull() ?: 0.0
     val tip = bill * (_TipPercentage.value / 100)
