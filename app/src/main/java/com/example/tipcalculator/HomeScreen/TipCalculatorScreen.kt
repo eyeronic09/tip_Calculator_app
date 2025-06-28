@@ -8,6 +8,7 @@ import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
@@ -23,6 +25,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
@@ -49,10 +52,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlin.random.Random
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -75,8 +80,7 @@ fun TipScreen(viewmodel: TipViewmodel) {
                     .padding(paddingValues)
 
             ) {
-
-                Column (
+                Column(
                     modifier = Modifier
                         .padding(20.dp)
                         .fillMaxWidth()
@@ -88,7 +92,6 @@ fun TipScreen(viewmodel: TipViewmodel) {
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     Spacer(Modifier.height(10.dp))
-
                     Text(
                         text = "Total per person",
                         textAlign = TextAlign.Center,
@@ -98,7 +101,6 @@ fun TipScreen(viewmodel: TipViewmodel) {
                         fontSize = 30.sp,
                         style = MaterialTheme.typography.titleMedium
                     )
-
                     Text(
                         text = "$${"%.2f".format(PerPerson)}",
                         textAlign = TextAlign.Center,
@@ -110,12 +112,10 @@ fun TipScreen(viewmodel: TipViewmodel) {
                     Spacer(Modifier.height(30.dp))
 
                 }
-
                 Card(
                     modifier = Modifier.padding(20.dp),
                     colors = CardDefaults.cardColors(containerColor = Color.White)
                 ) {
-
                     Column() {
                         Row(
                             modifier = Modifier
@@ -161,7 +161,8 @@ fun TipScreen(viewmodel: TipViewmodel) {
 
                                 Text(
                                     text = "$split",
-                                    modifier = Modifier.padding(10.dp)
+                                    modifier = Modifier
+                                        .padding(10.dp)
                                         .width(40.dp)
                                         .height(
                                             40.dp
@@ -178,59 +179,50 @@ fun TipScreen(viewmodel: TipViewmodel) {
                                         contentDescription = "Increase"
                                     )
                                 }
+
                             }
+
 
                         }
-
-                        Row(
-                            modifier = Modifier
-                                .padding(30.dp)
-                                .horizontalScroll(
-                                    rememberScrollState()
-                                ),
-                            horizontalArrangement = Arrangement.spacedBy(10.dp),
-                            verticalAlignment = Alignment.CenterVertically) {
-
-                            Button(
-                                onClick = {}, shape = RectangleShape) {
-                                Text("10%")
-                            }
-
-                            Button(
-                                onClick = {}, shape = RectangleShape) {
-                                Text("15%")
-                            }
-
-                            Button(
-                                onClick = {}, shape = RectangleShape) {
-                                Text("20%")
-                            }
-
-                            Button(
-                                onClick = {}, shape = RectangleShape,) {
-                                Text("25%")
-                            }
-
-                            Button(
-                                onClick = {}, shape = RectangleShape,) {
-                                Text("30%")
-                            }
-
-                            Button(
-                                onClick = {}, shape = RectangleShape,) {
-                                Text("35%")
-                            }
-
-                            Button(
-                                onClick = {}, shape = RectangleShape,) {
-                                Text("40%")
-                            }
-                        }
-
-
                     }
+                }
+                Card(modifier = Modifier
+                    .fillMaxWidth()
+                    .horizontalScroll(
+                        rememberScrollState()
+                    )
+                    .padding(20.dp)) {
+                    Row(modifier = Modifier.padding(10.dp),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                        Button(
+                            onClick = { /* ... */ },
+                            shape = RectangleShape
+                        ) {
+                            Text("10%")
 
+                        }
+                        Button(
+                            onClick = { /* ... */ },
+                            shape = RectangleShape
+                        ) {
+                            Text("15%")
 
+                        }
+                        Button(
+                            onClick = { /* ... */ },
+                            shape = RectangleShape
+                        ) {
+                            Text("20%")
+
+                        }
+                        Button(
+                            onClick = { /* ... */ },
+                            shape = RectangleShape
+                        ) {
+                            Text("custom tip")
+
+                        }
+                    }
                 }
             }
 
@@ -238,6 +230,7 @@ fun TipScreen(viewmodel: TipViewmodel) {
 
     )
 }
+
 @Preview(showSystemUi = true)
 @Composable
 private fun tipPreview() {
