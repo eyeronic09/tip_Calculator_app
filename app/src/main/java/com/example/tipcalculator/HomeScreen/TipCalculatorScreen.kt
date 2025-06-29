@@ -70,7 +70,7 @@ fun TipScreen(viewmodel: TipViewmodel) {
                 ) {
                     Spacer(Modifier.height(10.dp))
                     Text(
-                        text = "Total per person",
+                         text = "Total per person",
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth(),
                         color = MaterialTheme.colorScheme.primary,
