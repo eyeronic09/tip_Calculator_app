@@ -108,7 +108,7 @@ fun TipScreen(viewmodel: TipViewmodel) {
                             OutlinedTextField(
                                 value = billAmount,
                                 onValueChange = { viewmodel.userUpdateBill(it) },
-                                modifier = Modifier.size(110.dp, 35.dp),
+                                modifier = Modifier.size(110.dp, 55.dp),
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             )
                         }
