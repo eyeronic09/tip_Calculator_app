@@ -12,47 +12,42 @@ class TipViewmodel : ViewModel() {
     val BillAmount: StateFlow<String> = _BillAmount
 
     private val _TipPercentage = MutableStateFlow(0.0)
-    val TipPercentage: StateFlow<Double> = _TipPercentage
 
     private val _TotalPerPerson = MutableStateFlow(0.0)
-    val TotalPerPerson : StateFlow<Double> = _TotalPerPerson
+    val TotalPerPerson: StateFlow<Double> = _TotalPerPerson
 
     private val _spiltCounter = MutableStateFlow(0)
-    var spiltCounter : StateFlow<Int> = _spiltCounter
+    var spiltCounter: StateFlow<Int> = _spiltCounter
 
-    fun incrementSpilt(){
-        _spiltCounter.value = spiltCounter.value+1
+    fun incrementSpilt() {
+        _spiltCounter.value = spiltCounter.value + 1
         calculateTip()
     }
-    fun decrementSpilt(){
-        _spiltCounter.value = spiltCounter.value-1
+
+    fun decrementSpilt() {
+        _spiltCounter.value = spiltCounter.value - 1
         calculateTip()
     }
-    fun UpdateTipPercentage(newPercetage: Double){
+
+    fun UpdateTipPercentage(newPercetage: Double) {
         _TipPercentage.value = newPercetage
         calculateTip()
     }
 
-    fun userUpdateBill(newAmount: String){
+    fun userUpdateBill(newAmount: String) {
         _BillAmount.value = newAmount
         calculateTip()
     }
 
-private fun calculateTip() {
-    val bill = BillAmount.value.toDoubleOrNull() ?: 0.0
-    val tip = bill * (_TipPercentage.value / 100)
-    val total = bill + tip
-    val people = if(spiltCounter.value > 0 ) spiltCounter.value else 1
-    _TotalPerPerson.value = total / people
+    private fun calculateTip() {
+        val bill = BillAmount.value.toDoubleOrNull() ?: 0.0
+        val tip = bill * (_TipPercentage.value / 100)
+        val total = bill + tip
+        val people = if (spiltCounter.value > 0) spiltCounter.value else 1
+        _TotalPerPerson.value = total / people
 
 
-}
+    }
 
 
-}
-@Preview(showSystemUi = true)
-@Composable
-private fun tipPreview() {
-    val viewmodel = TipViewmodel()
-    TipScreen(viewmodel = viewmodel)
 }
